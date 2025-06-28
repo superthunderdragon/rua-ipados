@@ -7,5 +7,5 @@
 
 // 최상단 헤더의 메뉴 인덱스
 enum HeaderTab: String, CaseIterable {
-    case 홈, 학습하기, 대시보드, AI, 형성평가
+    case 홈, 학습하기, 대시보드, AI튜터, AI
 }

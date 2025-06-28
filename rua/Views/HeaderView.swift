@@ -39,7 +39,7 @@ struct HeaderView: View {
                             viewModel.selectedTab = tab
                         }
                     }
-                } else if(tab == .대시보드){
+                } else if(tab == .AI튜터 || tab == .대시보드){
                     if(UserDefaults.standard.string(forKey: "userRole") == "student") {
                         HStack(spacing: 10) {
                             Image(systemName: iconName(for: tab))
@@ -121,10 +121,10 @@ struct HeaderView: View {
                 return "book" + (viewModel.selectedTab == .학습하기 ? ".fill" : "")
             case .대시보드:
                 return "chart.bar.xaxis"
+            case .AI튜터:
+                return "pencil.and.outline"
             case .AI:
                 return "pencil.and.outline"
-            case .형성평가:
-                return "rectangle.and.pencil.and.ellipsis"
             }
         }
 }

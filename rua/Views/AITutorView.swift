@@ -1,20 +1,17 @@
 //
-//  AIContentCreateView.swift
+//  AITutorView.swift
 //  rua
 //
-//  Created by 김아인 on 6/28/25.
+//  Created by 김아인 on 6/29/25.
 //
 
 import SwiftUI
-import WebKit
 
-struct AIContentCreateView: View {
+struct AITutorView: View {
     @Binding var chatHis: [String]
     @StateObject var aiContentViewModel = AIContentViewModel()
     @State private var imageOffset: CGSize = .zero
     @State var chat: String = ""
-    @State private var showWebView: Bool = false
-    @State private var selectedURL: URL? = nil
     var body: some View {
         HStack {
             Spacer()
@@ -26,7 +23,7 @@ struct AIContentCreateView: View {
                             VStack(alignment: .leading) {
                                 ForEach(chatHis, id: \.self) { history in
                                     if (history.starts(with: "GEMINI: ")){
-                                        if (history.starts(with: "GEMINI: 교육 컨텐츠 생성에 실패했어요. ")) {
+                                        if (history.starts(with: "GEMINI: Gemini의 응답을 받아오는 데 실패했어요. ")) {
                                             HStack {
                                                 Text(history.description.replacingOccurrences(of: "GEMINI: ", with: ""))
                                                     .padding(.vertical, 13)
@@ -34,27 +31,6 @@ struct AIContentCreateView: View {
                                                     .padding(.leading, 36)
                                                     .padding(.trailing, 100)
                                                     .id(history)
-                                                Spacer()
-                                            }
-                                        } else if(history.starts(with: "GEMINI: api.slidesgpt.com")) {
-                                            HStack {
-                                                Button(action: {
-                                                    if let url = URL(string: "https://" + history.description.replacingOccurrences(of: "GEMINI: ", with: "")) {
-                                                        selectedURL = url
-                                                        showWebView = true
-                                                    }
-                                                }, label: {
-                                                    VStack(alignment: .leading, spacing: 0) {
-                                                        Text("요청하신 교육자료가 생성되었어요.")
-                                                            .foregroundStyle(Color.ruaBlack)
-                                                        Text("교육자료 확인하기")
-                                                            .foregroundStyle(Color.blue)
-                                                    }
-                                                    .padding(.vertical, 13)
-                                                    .padding(.leading, 36)
-                                                    .padding(.trailing, 100)
-                                                    .id(history)
-                                                })
                                                 Spacer()
                                             }
                                         } else {
@@ -100,7 +76,7 @@ struct AIContentCreateView: View {
                                                 }
                                             }
                                         HStack {
-                                            Text("루비와 Gemini가 교육 컨텐츠를 만들고 있어요..")
+                                            Text("루비와 Gemini가 함께 고민하고 있어요..")
                                                 .font(.system(size: 14))
                                                 .foregroundStyle(Color(hex: "8C8D8F"))
                                             ProgressView()
@@ -127,11 +103,6 @@ struct AIContentCreateView: View {
                         .frame(minHeight: gr.size.height)
                     }
                 }
-                .sheet(isPresented: $showWebView) {
-                    if let url = selectedURL {
-                        AuthWebView(url: url)
-                    }
-                }
                 VStack{
                     HStack{
                         TextField("", text: $chat, prompt: Text("메시지 입력").foregroundStyle(Color(hex: "B6B9C0")).fontWeight(.bold),axis:.vertical)
@@ -139,7 +110,7 @@ struct AIContentCreateView: View {
                             .padding(.horizontal,16)
                         Button(action:{
                             chatHis.append("나: " + chat)
-                            aiContentViewModel.loadGemini(question: chat)
+                            aiContentViewModel.chatGemini(question: chat)
                             chat = ""
                         },label:{
                             ZStack{
@@ -163,7 +134,7 @@ struct AIContentCreateView: View {
                 .padding(.horizontal,16)
                 .padding(.bottom, 10)
                 .shadow(color: Color(hex: "EBEBEB"), radius: 5, x: 0, y: 0)
-                Text("루비가 Google Gemini를 사용하여 교육 컨텐츠를 생성합니다. AI 답변은 부정확할 수 있습니다.")
+                Text("루비가 Google Gemini를 사용하여 응답을 생성합니다. AI 답변은 부정확할 수 있습니다.")
                     .font(.system(size: 12))
                     .foregroundStyle(Color(hex: "8C8D8F"))
             }
@@ -171,18 +142,4 @@ struct AIContentCreateView: View {
             Spacer()
         }
     }
-}
-
-struct AuthWebView: UIViewRepresentable {
-    let url: URL
-
-    func makeUIView(context: Context) -> WKWebView {
-        let webView = WKWebView()
-        var request = URLRequest(url: url)
-        request.setValue("Bearer iej2jnbyithl02o67061ygnlouxj9ju8", forHTTPHeaderField: "Authorization")
-        webView.load(request)
-        return webView
-    }
-
-    func updateUIView(_ uiView: WKWebView, context: Context) {}
 }

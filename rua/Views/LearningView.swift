@@ -14,6 +14,7 @@ struct LearningView: View {
     let contentTitle: String
     let subunitId: String
     @StateObject var lectureViewModel = LectureViewModel()
+    @StateObject var dashboardViewModel = DashboardViewModel()
     @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack {
@@ -64,6 +65,9 @@ struct LearningView: View {
                                 if(imageIndex < lectureViewModel.imageURLs.count - 1) {
                                     imageIndex += 1
                                     print(lectureViewModel.imageURLs[imageIndex])
+                                }
+                                if(imageIndex == lectureViewModel.imageURLs.count - 1) {
+                                    dashboardViewModel.lmsProgress(subUnitId: subunitId)
                                 }
                             }
                     } placeholder: {
@@ -116,6 +120,9 @@ struct LearningView: View {
                 .onTapGesture {
                     if(imageIndex < lectureViewModel.imageURLs.count - 1) {
                         imageIndex += 1
+                    }
+                    if(imageIndex == lectureViewModel.imageURLs.count - 1) {
+                        dashboardViewModel.lmsProgress(subUnitId: subunitId)
                     }
                 }
                 .padding(.leading, 32)

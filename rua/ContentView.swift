@@ -67,7 +67,7 @@ struct DonutChart: View {
                 )
                 .rotationEffect(.degrees(-90))
                 .scaleEffect(x: -1, y: 1)
-            Text("80%")
+            Text("\(Int(progress * 100))%")
                 .font(.system(size: 36, weight: .bold))
                 .foregroundStyle(Color.ruaAccent)
         }
@@ -80,6 +80,7 @@ struct ContentView: View {
     @ObservedObject var viewModel: HeaderTabViewModel
     @EnvironmentObject var appState: AppState
     @StateObject var loginViewModel = LoginViewModel()
+    @StateObject var dashboardViewModel = DashboardViewModel()
     var body: some View {
         if(isLogined == true) {
             VStack {
@@ -89,12 +90,12 @@ struct ContentView: View {
                     HomeView(viewModel: viewModel)
                 case .학습하기:
                     LearningListView()
-                case .대시보드:
-                    DashboardView()
+                case .AI튜터:
+                    AITutorView(chatHis: $chatHis)
                 case .AI:
                     AIContentCreateView(chatHis: $chatHis)
-//                case .형성평가:
-//                    EvaluationSelectView()
+                case .대시보드:
+                    DashboardView()
 //                case .테스트1:
 //                    EvaluationSelectView()
 //                case .테스트2:
@@ -109,6 +110,12 @@ struct ContentView: View {
             }
             .onAppear {
                 loginViewModel.tokenRefresh()
+                if(UserDefaults.standard.string(forKey: "userRole") == "student") {
+                    chatHis = ["GEMINI: 안녕하세요! 어떤 점이 궁금하신가요? 무엇이든 물어보세요!"]
+                }
+                Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
+                    dashboardViewModel.lmsStudyTime()
+                }
             }
         } else {
             if let role = appState.signupRole {

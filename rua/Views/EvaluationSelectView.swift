@@ -16,6 +16,7 @@ struct EvaluationSelectView: View {
         [Color.ruaBlack, Color(hex: "E7E9EA"), Color(hex: "F7F7F8")],
         [Color.ruaBlack, Color(hex: "E7E9EA"), Color(hex: "F7F7F8")]
     ]
+    @StateObject var dashboardViewModel = DashboardViewModel()
     var body: some View {
         HStack {
             Spacer()
@@ -76,8 +77,10 @@ struct EvaluationSelectView: View {
                                     seletedAnswer = contentEvaluation.selections[forIndex]
                                     if(contentEvaluation.answer == contentEvaluation.selections[forIndex]) {
                                         seletedAnswerColorList[forIndex] = [Color(hex: "32CC58"), Color(hex: "32CC58"), Color(hex: "EAF9EE")]
+                                        dashboardViewModel.lmsCorrect(score: 1)
                                     } else{
                                         seletedAnswerColorList[forIndex] = [Color(hex: "FE315B"), Color(hex: "FF4035"), Color(hex: "FFEBE9")]
+                                        dashboardViewModel.lmsCorrect(score: 0)
                                     }
                                 }
                         }
