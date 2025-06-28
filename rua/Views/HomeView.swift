@@ -56,31 +56,6 @@ struct HomeView: View {
                             .onTapGesture {
                                 viewModel.selectedTab = .학습하기
                             }
-//                            .padding(.bottom, 24)
-//                            HStack {
-//                                VStack(spacing: 0) {
-//                                    HStack {
-//                                        Image(systemName: "graduationcap.fill")
-//                                            .font(.system(size: 16))
-//                                            .foregroundStyle(Color.ruaBlack)
-//                                        Text("2025 온라인 코딩파티")
-//                                            .font(.system(size: 16, weight: .bold))
-//                                            .foregroundStyle(Color.ruaBlack)
-//                                    }
-//                                    .padding(.bottom, 6)
-//                                    Text("2025. 06. 12. ~ 2025. 06. 30.")
-//                                        .font(.system(size: 14))
-//                                        .foregroundStyle(Color(hex: "8C8D8F"))
-//                                }
-//                                .padding(16)
-//                                Spacer()
-//                            }
-//                            .background(Color(hex: "EFEFF0"))
-//                            .cornerRadius(8)
-//                            .overlay(
-//                                RoundedRectangle(cornerRadius: 8)
-//                                    .stroke(Color(hex: "E1E1E4"), lineWidth: 1)
-//                            )
                         }
                         .padding(28)
                         Spacer()

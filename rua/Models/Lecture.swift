@@ -46,7 +46,7 @@ struct ContentsListResponse: Codable {
     let contents: [Content]
 }
 
-// 컨텐츠 API 응답 저장
+// 컨텐츠 중 퀴즈(평가) 데이터
 struct ContentEvaluation: Codable {
     let message: String
     let question: String

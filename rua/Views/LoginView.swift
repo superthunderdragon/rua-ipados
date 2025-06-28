@@ -41,10 +41,6 @@ struct LoginView: View {
                                     if let error = error{
                                         print(error)
                                     } else{
-                                        print("❤️❤️❤️❤️❤️❤️❤️❤️")
-                                        print(String(user?.id ?? 0))
-                                        print(String(user?.kakaoAccount?.profile?.nickname ?? "Unknown"))
-                                        print("🤍🤍🤍🤍🤍🤍🤍🤍")
                                         UserDefaults.standard.set((user?.id)!, forKey: "loginSession")
                                         if let name = user?.kakaoAccount?.profile?.nickname{
                                             UserDefaults.standard.set(name, forKey: "kakaoNickname")
@@ -72,9 +68,6 @@ struct LoginView: View {
                                     if let error = error{
                                         print(error)
                                     } else{
-                                        print("❤️❤️❤️❤️❤️❤️❤️❤️")
-                                        print(user)
-                                        print("🤍🤍🤍🤍🤍🤍🤍🤍")
                                         UserDefaults.standard.set((user?.id)!, forKey: "loginSession")
                                         if let name = user?.kakaoAccount?.profile?.nickname{
                                             UserDefaults.standard.set(name, forKey: "kakaoNickname")
@@ -82,9 +75,11 @@ struct LoginView: View {
                                         if let profile = user?.kakaoAccount?.profile?.profileImageUrl{
                                             UserDefaults.standard.set(profile, forKey: "kakaoProfile")
                                         }
-                                        withAnimation{
-                                            isLogined = true
-                                        }
+                                        loginViewModel.login(
+                                            kakaoUid: String(user?.id ?? 0),
+                                            username: user?.kakaoAccount?.profile?.nickname ?? "Unknown",
+                                            userRule: userRole
+                                        )
                                     }
                                 }
                             }
@@ -116,7 +111,3 @@ struct LoginView: View {
         .background(Color(hex: "EDEEF2"))
     }
 }
-
-//#Preview {
-//    LoginView()
-//}

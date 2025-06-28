@@ -43,10 +43,6 @@ struct EvaluationSelectView: View {
                 .padding(.bottom, 10)
                 HStack {
                     VStack(alignment: .leading) {
-//                        Text("\(contentEvaluation.question)")
-//                            .font(.system(size: 24, weight: .bold))
-//                            .foregroundStyle(Color.ruaBlack)
-//                            .padding(.bottom, 16)
                         HStack {
                             Text("\(contentEvaluation.contents)")
                                 .font(.system(size: 36, weight: .bold))

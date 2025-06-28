@@ -125,10 +125,6 @@ struct HeaderView: View {
                 return "pencil.and.outline"
             case .형성평가:
                 return "rectangle.and.pencil.and.ellipsis"
-//            case .테스트1:
-//                return "applelogo"
-//            case .테스트2:
-//                return "applelogo"
             }
         }
 }
